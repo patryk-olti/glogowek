@@ -7,8 +7,6 @@ const repoName =
   process.env.REPO_NAME ||
   "glogowek";
 
-const rootOut = ".out-root";
-const subOut = ".out-sub";
 const finalOut = "out";
 
 function rm(targetPath) {
@@ -52,29 +50,7 @@ function runBuild(basePath) {
   });
 }
 
-runBuild("");
-move("out", rootOut);
-
 runBuild(`/${repoName}`);
-move("out", subOut);
-
-rm(finalOut);
-ensureDir(finalOut);
-
-// Root (custom domain) build at /
-copy(rootOut, finalOut);
-
-// Project Pages build at /<repoName>/
-const subFolder = path.join(subOut, repoName);
-const finalSubFolder = path.join(finalOut, repoName);
-ensureDir(finalSubFolder);
-
-if (fs.existsSync(subFolder)) {
-  copy(subFolder, finalSubFolder);
-} else {
-  // Fallback: if Next didn't emit a nested folder, copy everything.
-  copy(subOut, finalSubFolder);
-}
 
 writeNoJekyll(finalOut);
 
