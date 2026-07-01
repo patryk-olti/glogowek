@@ -1,5 +1,8 @@
 import { stagePaths } from "@/config/routes";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const asset = (src: string) => `${basePath}${src}`;
+
 export const welcome = {
   title: "0/7 Fragmentów Odnalezionych",
   headline: "Zagadka Głogówka",
@@ -182,7 +185,7 @@ export const thankYou = {
     "Odnaleźliście wszystkie tropy Zaginionej Kroniki i dotarliście aż do jej końca.",
     "Ale Głogówek ma jeszcze wiele sekretów. Wróćcie, gdy zechcecie odkrywać dalej — ulica zawsze ma kolejną opowieść do opowiedzenia.",
   ],
-  image: "/glogowek-finale.png",
+  image: asset("/glogowek-finale.png"),
   imageAlt: "Ilustracja rynku i ratusza w Głogówku — finał przygody",
   creatorLabel: "Twórca opowieści",
   creatorEmail: "iamoltix@gmail.com",

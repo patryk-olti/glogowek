@@ -6,6 +6,8 @@ import { ContinueButton } from "@/components/ContinueButton";
 import { ParchmentShell } from "@/components/ParchmentShell";
 import { welcome } from "@/config/stages";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export function WelcomeScreen() {
   const [ready, setReady] = useState(false);
 
@@ -36,7 +38,7 @@ export function WelcomeScreen() {
             <div className="px-4 pt-4">
               <div className="animate-scale-in relative mb-4 aspect-square overflow-hidden rounded-xl bg-[#F9F4EE] shadow-md shadow-[#5D2E17]/20">
                 <Image
-                  src="/glogowek-welcome.png"
+                  src={`${basePath}/glogowek-welcome.png`}
                   alt="Ilustracja rynku i ratusza w Głogówku"
                   fill
                   className="object-contain"

@@ -1,11 +1,14 @@
 import { stagePaths } from "@/config/routes";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const asset = (src: string) => `${basePath}${src}`;
+
 export const destinations = {
   ratusz: {
     slug: stagePaths.ratusz,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Ratusza",
-    image: "/ratusz-1543.png",
+    image: asset("/ratusz-1543.png"),
     imageAlt:
       "Historyczna ilustracja ratusza w Głogówku — rynek z wieżą zegarową i sceną z życia miasta",
     paragraphs: [
@@ -21,7 +24,7 @@ export const destinations = {
     slug: stagePaths.zamek,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Zamku",
-    image: "/zamek-glogowek.png",
+    image: asset("/zamek-glogowek.png"),
     imageClassName: "object-cover object-bottom",
     imageAlt:
       "Historyczna ilustracja zamku w Głogówku — gotycko-renesansowy zamek rodu Oppersdorffów z wieżami i bramą wjazdową",
@@ -38,7 +41,7 @@ export const destinations = {
     slug: stagePaths.brama,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Bramy Zamkowej",
-    image: "/brama-zamkowa.png",
+    image: asset("/brama-zamkowa.png"),
     imageAlt:
       "Historyczna ilustracja Bramy Zamkowej w Głogówku — barokowa brama miejska z łukiem wjazdowym przy ulicy Zamkowej",
     paragraphs: [
@@ -54,7 +57,7 @@ export const destinations = {
     slug: stagePaths.park,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Parku Miejskiego",
-    image: "/park-staw.png",
+    image: asset("/park-staw.png"),
     imageClassName: "object-cover object-bottom",
     imageAlt:
       "Historyczna ilustracja Parku Miejskiego w Głogówku — spokojny staw otoczony drzewami, z łódką u brzegu i literą G w rogu",
@@ -71,7 +74,7 @@ export const destinations = {
     slug: stagePaths.kosciol,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Kościoła św. Mikołaja",
-    image: "/kosciol-sw-mikolaja.png",
+    image: asset("/kosciol-sw-mikolaja.png"),
     imageClassName: "object-cover object-center",
     imageAlt:
       "Historyczna ilustracja Kościoła św. Mikołaja w Głogówku — barokowa świątynia z wieżą i krzyżem, przy mur pruskim budynku dawnego szpitala",
@@ -88,7 +91,7 @@ export const destinations = {
     slug: stagePaths.wieza,
     subtitle: "CEL OSIĄGNIĘTY",
     title: "Dotarliście do Wieży Ciśnień",
-    image: "/wieza-cisnien.png",
+    image: asset("/wieza-cisnien.png"),
     imageClassName: "object-cover object-center",
     imageAlt:
       "Historyczna ilustracja wieży ciśnień w Głogówku — ceglana wieża z dachami nad zabudową miasta",
