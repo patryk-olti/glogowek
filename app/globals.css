@@ -1,26 +1,498 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --chronicle-bg: #1a1208;
+  --chronicle-gold: #c9a84c;
+  --chronicle-gold-light: #e8c96a;
+  --chronicle-parchment: #f4ead5;
+  --chronicle-parchment-dark: #e8dcc4;
+  --chronicle-red: #8b1a1a;
+  --chronicle-red-dark: #6b1212;
+  --chronicle-text: #1a0f08;
+  --chronicle-text-muted: #4a2e1f;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-chronicle-bg: var(--chronicle-bg);
+  --color-chronicle-gold: var(--chronicle-gold);
+  --color-chronicle-gold-light: var(--chronicle-gold-light);
+  --color-chronicle-parchment: var(--chronicle-parchment);
+  --color-chronicle-parchment-dark: var(--chronicle-parchment-dark);
+  --color-chronicle-red: var(--chronicle-red);
+  --color-chronicle-red-dark: var(--chronicle-red-dark);
+  --color-chronicle-text: var(--chronicle-text);
+  --color-chronicle-text-muted: var(--chronicle-text-muted);
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-source-serif), Georgia, serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--chronicle-bg);
+  color: #f5f0e8;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  overflow: hidden;
+}
+
+.game-viewport {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.game-shell {
+  --story-font: clamp(calc(0.62rem + 2px), calc(1.72dvh + 2px), calc(0.94rem + 2px));
+  --story-leading: 1.42;
+  --drop-cap-size: clamp(1.45rem, 4.8dvh, 2.75rem);
+  --hero-icon-size: clamp(2rem, 5.2dvh, 2.75rem);
+  --hero-quote-size: clamp(calc(0.78rem + 2px), calc(2dvh + 2px), calc(1rem + 2px));
+  --header-pad-y: clamp(0.4rem, 1.2dvh, 0.75rem);
+  --header-title-size: clamp(calc(0.9rem + 2px), calc(2.2dvh + 2px), calc(1.125rem + 2px));
+  --card-pad-y: clamp(0.5rem, 1.4dvh, 0.875rem);
+  --card-pad-x: clamp(0.875rem, 2.5vw, 1.25rem);
+  --footer-gap: clamp(0.35rem, 1dvh, 0.65rem);
+  --form-font: clamp(calc(0.75rem + 2px), calc(1.85dvh + 2px), calc(0.875rem + 2px));
+  --form-pad-y: clamp(0.4rem, 1.1dvh, 0.625rem);
+
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.game-main {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  padding-inline: clamp(0.65rem, 2.5vw, 1rem);
+  padding-bottom: clamp(0.35rem, 1dvh, 0.75rem);
+}
+
+.parchment-texture {
+  background-color: var(--chronicle-parchment);
+  color: var(--chronicle-text);
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(139, 26, 26, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(139, 26, 26, 0.03) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(232, 220, 196, 0.4) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(200, 180, 140, 0.2) 0%,
+      transparent 40%
+    );
+  background-size: 20px 20px, 20px 20px, 100% 100%, 100% 100%;
+}
+
+.game-card {
+  display: flex;
+  min-height: 0;
+  max-height: 100%;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad-y) var(--card-pad-x);
+  font-size: var(--story-font);
+  line-height: var(--story-leading);
+  --story-gap: clamp(0.5lh, 1lh, 1.5lh);
+}
+
+.story-body {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--story-gap);
+  font-size: var(--story-font);
+  line-height: var(--story-leading);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--chronicle-red) 42%, transparent)
+    color-mix(in srgb, var(--chronicle-parchment-dark) 85%, transparent);
+}
+
+.story-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.story-body::-webkit-scrollbar-track {
+  margin-block: 3px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--chronicle-parchment-dark) 70%, transparent);
+}
+
+.story-body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--chronicle-red) 38%, var(--chronicle-gold) 18%);
+  border: 1px solid color-mix(in srgb, var(--chronicle-parchment-dark) 55%, transparent);
+}
+
+.story-body::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--chronicle-red) 52%, transparent);
+}
+
+.card-footer {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-gap);
+  margin-top: var(--story-gap);
+}
+
+.story-paragraph {
+  color: var(--chronicle-text);
+  font-size: var(--story-font);
+  line-height: var(--story-leading);
+  text-align: justify;
+  hyphens: auto;
+  font-weight: 500;
+}
+
+.story-hint {
+  color: var(--chronicle-text-muted);
+  font-size: clamp(calc(0.62rem + 2px), calc(1.55dvh + 2px), calc(0.75rem + 2px));
+  line-height: 1.35;
+}
+
+.story-paragraph.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: var(--drop-cap-size);
+  line-height: 0.85;
+  font-weight: 700;
+  color: var(--chronicle-red);
+  margin-right: 0.12em;
+  margin-top: 0.05em;
+}
+
+.game-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-gap);
+}
+
+.game-form .chronicle-btn,
+.game-form .chronicle-input {
+  font-size: var(--form-font);
+  padding-block: var(--form-pad-y);
+}
+
+.chronicle-btn {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background-color: var(--chronicle-red);
+  padding-inline: clamp(0.65rem, 2vw, 1rem);
+  padding-block: clamp(0.625rem, 1.1dvh, 0.75rem);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(calc(0.75rem + 2px), calc(1.85dvh + 2px), calc(0.875rem + 2px));
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: #fff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.3s ease,
+    background-color 0.2s ease;
+}
+
+.chronicle-btn:hover {
+  background-color: var(--chronicle-red-dark);
+  box-shadow: 0 4px 18px rgba(139, 26, 26, 0.35);
+}
+
+.chronicle-btn:active {
+  transform: scale(0.98);
+}
+
+.chronicle-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 62%
+  );
+  background-size: 250% 100%;
+  animation: shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.chronicle-btn__arrow {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chronicle-btn:hover .chronicle-btn__arrow {
+  transform: translateX(4px);
+}
+
+.chronicle-btn:hover .chronicle-btn__arrow--back {
+  transform: translateX(-4px);
+}
+
+.chronicle-input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid color-mix(in srgb, var(--chronicle-gold) 40%, transparent);
+  background-color: color-mix(in srgb, var(--chronicle-bg) 80%, transparent);
+  padding-inline: clamp(0.65rem, 2vw, 1rem);
+  padding-block: clamp(0.625rem, 1.1dvh, 0.75rem);
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: clamp(calc(0.75rem + 2px), calc(1.85dvh + 2px), calc(0.875rem + 2px));
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: var(--chronicle-gold-light);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.chronicle-input::placeholder {
+  font-weight: 400;
+  letter-spacing: normal;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.chronicle-input:focus {
+  border-color: var(--chronicle-gold);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--chronicle-gold) 50%, transparent);
+}
+
+.game-header {
+  padding-block: var(--header-pad-y);
+  padding-inline: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+.game-header-title {
+  font-size: var(--header-title-size);
+}
+
+@media (max-width: 380px) {
+  .game-shell {
+    --card-pad-x: clamp(0.55rem, 2vw, 0.75rem);
+    --footer-gap: clamp(0.3rem, 0.9dvh, 0.5rem);
+  }
+}
+
+@media (max-height: 740px) {
+  .game-shell {
+    --story-font: clamp(calc(0.58rem + 2px), calc(1.55dvh + 2px), calc(0.82rem + 2px));
+    --story-leading: 1.38;
+    --drop-cap-size: clamp(1.25rem, 4.2dvh, 2rem);
+    --hero-icon-size: clamp(1.75rem, 4.5dvh, 2.25rem);
+  }
+}
+
+@media (max-height: 667px) {
+  .game-shell {
+    --story-font: clamp(calc(0.54rem + 2px), calc(1.42dvh + 2px), calc(0.74rem + 2px));
+    --story-leading: 1.34;
+    --drop-cap-size: clamp(1.1rem, 3.8dvh, 1.65rem);
+    --hero-quote-size: clamp(calc(0.72rem + 2px), calc(1.85dvh + 2px), calc(0.88rem + 2px));
+    --footer-gap: 0.3rem;
+    --form-pad-y: 0.35rem;
+  }
+
+  .game-compact-hero {
+    padding-top: 0.4rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .game-shell {
+    --story-font: clamp(calc(0.5rem + 2px), calc(1.28dvh + 2px), calc(0.68rem + 2px));
+    --story-leading: 1.3;
+    --drop-cap-size: clamp(1rem, 3.2dvh, 1.4rem);
+  }
+}
+
+@media (min-height: 860px) {
+  .game-shell {
+    --story-leading: 1.5;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .game-shell {
+    --hero-icon-size: clamp(1.4rem, 7dvh, 1.85rem);
+    --hero-quote-size: clamp(calc(0.68rem + 2px), calc(1.6dvh + 2px), calc(0.82rem + 2px));
+    --header-pad-y: 0.3rem;
+    --card-pad-y: clamp(0.35rem, 1dvh, 0.55rem);
+  }
+
+  .game-compact-hero {
+    padding-top: 0.25rem;
+    padding-bottom: 0.2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .game-shell {
+    --story-font: clamp(calc(0.68rem + 2px), calc(1.5dvh + 2px), calc(0.96rem + 2px));
+    --card-pad-x: 1.25rem;
+  }
+}
+
+.library-bg {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--chronicle-bg);
+  background-image:
+    radial-gradient(
+      ellipse 55% 45% at 12% 18%,
+      rgba(201, 168, 76, 0.14) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 88% 78%,
+      rgba(201, 168, 76, 0.09) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 90% 75% at 50% 50%,
+      transparent 25%,
+      rgba(8, 5, 2, 0.55) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(26, 18, 8, 0.45) 0%,
+      rgba(26, 18, 8, 0.58) 50%,
+      rgba(26, 18, 8, 0.72) 100%
+    ),
+    var(--library-bg-url, url("/bg-library.svg"));
+  background-size: cover;
+  background-position: center;
+}
+
+.library-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.library-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.parchment-page {
+  position: relative;
+  isolation: isolate;
+  background-color: #f8f0d8;
+  color: #5d2e17;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(93, 46, 23, 0.028) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(93, 46, 23, 0.028) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 18% 88%,
+      rgba(139, 90, 43, 0.1) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 85% 10%,
+      rgba(180, 140, 80, 0.14) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 35% 30% at 62% 68%,
+      rgba(93, 46, 23, 0.06) 0%,
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse 110% 85% at 50% 28%,
+      rgba(255, 248, 220, 0.55) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      transparent 42%,
+      rgba(93, 46, 23, 0.07) 100%
+    );
+  background-size: 22px 22px, 22px 22px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  box-shadow: inset 0 0 100px rgba(93, 46, 23, 0.06);
+}
+
+.parchment-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.parchment-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.parchment-shell {
+  min-height: 0;
+}
+
+.destination-image-frame {
+  clip-path: polygon(
+    0% 12px,
+    4% 0%,
+    8% 12px,
+    12% 0%,
+    16% 12px,
+    20% 0%,
+    24% 12px,
+    28% 0%,
+    32% 12px,
+    36% 0%,
+    40% 12px,
+    44% 0%,
+    48% 12px,
+    52% 0%,
+    56% 12px,
+    60% 0%,
+    64% 12px,
+    68% 0%,
+    72% 12px,
+    76% 0%,
+    80% 12px,
+    84% 0%,
+    88% 12px,
+    92% 0%,
+    96% 12px,
+    100% 0%,
+    100% 100%,
+    0% 100%
+  );
 }

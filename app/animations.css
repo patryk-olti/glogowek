@@ -1,0 +1,434 @@
+/* Chronicle entrance & ambient animations */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes expand-line {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes icon-bounce-in {
+  from {
+    opacity: 0;
+    transform: scale(0.55) rotate(-8deg);
+  }
+  60% {
+    transform: scale(1.06) rotate(2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes ambient-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.55s ease both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-expand-line {
+  animation: expand-line 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center;
+}
+
+.animate-page-enter {
+  animation: page-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-icon-in {
+  animation: icon-bounce-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-card-rise {
+  animation: card-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-twinkle {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.anim-delay-100 {
+  animation-delay: 100ms;
+}
+
+.anim-delay-200 {
+  animation-delay: 200ms;
+}
+
+.anim-delay-300 {
+  animation-delay: 300ms;
+}
+
+.anim-delay-400 {
+  animation-delay: 400ms;
+}
+
+.anim-delay-500 {
+  animation-delay: 500ms;
+}
+
+.anim-delay-600 {
+  animation-delay: 600ms;
+}
+
+.anim-delay-700 {
+  animation-delay: 700ms;
+}
+
+.anim-delay-800 {
+  animation-delay: 800ms;
+}
+
+.twinkle-delay-1 {
+  animation-delay: 0.4s;
+}
+
+.twinkle-delay-2 {
+  animation-delay: 0.8s;
+}
+
+.parchment-page {
+  animation: page-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.library-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 45% 35% at 50% 15%,
+    rgba(201, 168, 76, 0.1) 0%,
+    transparent 70%
+  );
+  animation: ambient-glow 7s ease-in-out infinite;
+}
+
+.story-paragraph {
+  animation: fade-in-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.story-paragraph:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.story-paragraph:nth-child(2) {
+  animation-delay: 0.28s;
+}
+
+.story-paragraph:nth-child(3) {
+  animation-delay: 0.41s;
+}
+
+.story-paragraph:nth-child(4) {
+  animation-delay: 0.54s;
+}
+
+.story-paragraph:nth-child(5) {
+  animation-delay: 0.67s;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  opacity: 0.75;
+  animation: cursor-blink 0.85s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.story-body .story-hint {
+  margin-top: 0.5rem;
+}
+
+.story-body--typing .story-paragraph {
+  animation: none !important;
+}
+
+/* Destination loading splash — centered blink, then rise to reveal content */
+@keyframes destination-blink {
+  0%,
+  58%,
+  100% {
+    opacity: 1;
+  }
+  6% {
+    opacity: 0.15;
+  }
+  12% {
+    opacity: 1;
+  }
+  18% {
+    opacity: 0.2;
+  }
+  24% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.1;
+  }
+  36% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 0.25;
+  }
+  48% {
+    opacity: 1;
+  }
+  54% {
+    opacity: 0.18;
+  }
+}
+
+@keyframes destination-splash-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(calc(-50vh + 2.5rem));
+  }
+}
+
+.destination-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f9f4ee;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.destination-splash__subtitle {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(45, 41, 38, 0.7);
+  animation: destination-blink 2.2s step-end forwards;
+}
+
+.destination-splash__title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 4.8dvh, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2d2926;
+  animation: destination-blink 2.2s step-end forwards;
+}
+
+.destination-splash--exit {
+  animation: destination-splash-exit 0.55s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.destination-splash--exit .destination-splash__subtitle,
+.destination-splash--exit .destination-splash__title {
+  animation: none;
+  opacity: 1;
+}
+
+.destination-content--hidden {
+  visibility: hidden;
+}
+
+/* Hold entrance animations until client mount (avoids SSR finishing before paint) */
+.screen-mount:not(.screen-mount--ready) .animate-fade-in-up,
+.screen-mount:not(.screen-mount--ready) .animate-fade-in-down,
+.screen-mount:not(.screen-mount--ready) .animate-fade-in,
+.screen-mount:not(.screen-mount--ready) .animate-scale-in,
+.screen-mount:not(.screen-mount--ready) .animate-expand-line,
+.screen-mount:not(.screen-mount--ready) .animate-page-enter {
+  animation: none !important;
+  opacity: 0;
+}
+
+.screen-mount:not(.screen-mount--ready) .animate-scale-in {
+  transform: scale(0.94);
+}
+
+.screen-mount:not(.screen-mount--ready) .animate-expand-line {
+  transform: scaleX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-expand-line,
+  .animate-page-enter,
+  .animate-icon-in,
+  .animate-card-rise,
+  .animate-twinkle,
+  .parchment-page,
+  .story-paragraph,
+  .library-bg::after,
+  .chronicle-btn::after,
+  .destination-splash,
+  .destination-splash__subtitle,
+  .destination-splash__title {
+    animation: none !important;
+  }
+
+  .destination-splash {
+    display: none;
+  }
+
+  .destination-content--hidden {
+    visibility: visible;
+  }
+
+  .screen-mount:not(.screen-mount--ready) .animate-fade-in-up,
+  .screen-mount:not(.screen-mount--ready) .animate-fade-in-down,
+  .screen-mount:not(.screen-mount--ready) .animate-fade-in,
+  .screen-mount:not(.screen-mount--ready) .animate-scale-in,
+  .screen-mount:not(.screen-mount--ready) .animate-expand-line,
+  .screen-mount:not(.screen-mount--ready) .animate-page-enter {
+    opacity: 1;
+    transform: none;
+  }
+
+  .chronicle-btn:hover .chronicle-btn__arrow {
+    transform: none;
+  }
+
+  .chronicle-btn:hover .chronicle-btn__arrow--back {
+    transform: none;
+  }
+
+  .typing-cursor {
+    animation: none !important;
+    opacity: 0;
+  }
+}
